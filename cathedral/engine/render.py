@@ -25,4 +25,8 @@ def output(frames, path, name, quality=100):
     if name[-3:] == 'jpg':
         name = name[:-4]  
         for cnt, frame in enumerate(frames):
-            frame.save(f"{path}{name}_{cnt:0>7}.jpg", quality=quality)
+            frame.save(f'{path}{name}_{cnt:0>7}.jpg', quality=quality)
+            
+    if name[-3:] == 'gif':
+        name = name[:-4]  
+        frames[0].save(f'{path}{name}.gif', append_images=[frame for frame in frames[1:]], save_all=True, loop=0)

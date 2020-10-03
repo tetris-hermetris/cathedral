@@ -16,6 +16,7 @@ for i in range(500):
         _l_blues.append((0.05 - random() / 30, .04 + random() / 30, .2 + random() / 5)) 
 
 colors = {'reds':    tuple(_l_whites),
+          'whites': tuple(_l_whites),
           'yellows': tuple(_l_yellows),
           'reds':    tuple(_l_reds),
           'blues':   tuple(_l_blues)}
@@ -23,9 +24,17 @@ colors = {'reds':    tuple(_l_whites),
 def secondItem(l):
     return l[1]
 
-def pickColor(raw_color_tag, cnt, format=255, quantify=10):
+def pickColor(raw_color_tag, cnt, format=255, quantify=50):
     '''Returns final color value for given raw color tag and current counter'''
     
+    # cleaned_color_tag = {}
+    for color in raw_color_tag:
+    #     print(color, raw_color_tag[color])
+        if raw_color_tag[color] <= 0:
+            raw_color_tag[color] = 1e-50
+    #         cleaned_color_tag[color] = raw_color_tag[color]
+    # print(len(cleaned_color_tag.items()))
+
     qcnt = cnt % quantify
     k = quantify/sum(raw_color_tag.values())
 
