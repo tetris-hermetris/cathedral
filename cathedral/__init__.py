@@ -4,8 +4,8 @@ You shouldn't need to modify this file, but if you are making submodules (nested
 
 Example
 -------
-If you have a submodule folder called /foo, with a module inside called bar.py you will need to include
-    a __init__.py file in /foo with the following import statement:
+If you have a submodule folder called /graphics, with a module inside called geometry.py you will need to include
+    a __init__.py file in /graphics with the following import statement:
         ```
         from .bar import *
         ```

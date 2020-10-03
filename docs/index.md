@@ -1,3 +1,3 @@
-# Package name
+# Cathedral
 
-Welcome to the package_name docs!
+Here would be docs

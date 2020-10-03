@@ -1,12 +1,12 @@
-site_name: project_name
+site_name: cathedral
 
 nav:
     - Home: index.md
 
 theme: readthedocs
 
-repo_url: Fill in your repo url here
+repo_url: https://github.com/tetris-hermetris/cathedral
 
-site_description: This is the documentation site for project_name.
+site_description: This is the documentation site for cathedral.
 
-site_author: Your name here
+site_author: Max Ilinov

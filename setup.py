@@ -39,6 +39,8 @@ setuptools.setup(
     
 
     install_requires = [
+    "pillow",
+    "drawBot"
     "docopt", # Used for argument parsing
       ],
     extras_require = {
@@ -49,6 +51,6 @@ setuptools.setup(
     },
     classifiers = [
         "Programming Language :: Python :: 3",
-        "Operating System :: OS Independent",
+        "Operating System :: macos",
     ],
 )
