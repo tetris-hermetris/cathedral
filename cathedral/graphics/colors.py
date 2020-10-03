@@ -1,79 +1,51 @@
 from random import random
 
-l_whites = []
-l_yellows = []
-l_reds = []
-l_blues = []
-l_whites255 = []
-l_yellows255 = []
-l_reds255 = []
-l_blues255 = []
+_l_whites = []
+_l_yellows = []
+_l_reds = []
+_l_blues = []
 
 for i in range(500):
     w = 1 - random() / 15
-    l_whites.append((w,w,w))
-    l_whites255.append((int(w*255),int(w*255),int(w*255)))
-    
-    l_reds.append((1,  random() / 4, random() / 4)) 
-    l_reds255.append((255,  int(random() / 4), int(random() / 4))) 
-
-    l_yellows.append((1, 1 - random() / 4, random() / 4)) 
-    l_yellows255.append((255, int(255 - random() * 63.75), int(random() * 64))) 
-
+    _l_whites.append((w,w,w))
+    _l_reds.append((1,  random() / 4, random() / 4)) 
+    _l_yellows.append((1, 1 - random() / 4, random() / 4)) 
     if i % 9 == 0:
-        l_blues.append((0.05 - random() / 30, .04 + random() / 5, .2 + random() / 4)) 
-        l_blues255.append((int(12.75 - random() * 8.5), int(10.2 + random() / 5), int(51 + random() * 63.75))) 
+        _l_blues.append((0.05 - random() / 30, .04 + random() / 5, .2 + random() / 4)) 
     else:
-        l_blues.append((0.05 - random() / 30, .04 + random() / 30, .2 + random() / 5)) 
-        l_blues255.append((int(12.75 - random() * 8.5), int(10.2 + random() * 8.5), int(51 + random() * 51))) 
+        _l_blues.append((0.05 - random() / 30, .04 + random() / 30, .2 + random() / 5)) 
 
-l_whites = tuple(l_whites)
-l_yellows = tuple(l_yellows)
-l_reds = tuple(l_reds)
-l_blues = tuple(l_blues)
-l_whites255 = tuple(l_whites255)
-l_yellows255 = tuple(l_yellows255)
-l_reds255 = tuple(l_reds255)
-l_blues255 = tuple(l_blues255)
+colors = {'reds':    tuple(_l_whites),
+          'yellows': tuple(_l_yellows),
+          'reds':    tuple(_l_reds),
+          'blues':   tuple(_l_blues)}
 
+def secondItem(l):
+    return l[1]
 
+def pickColor(raw_color_tag, cnt, format=255, quantify=10):
+    '''Returns final color value for given raw color tag and current counter'''
+    
+    qcnt = cnt % quantify
+    k = quantify/sum(raw_color_tag.values())
 
-def whites(n):
-    return l_whites[n % len(l_whites)]
+    sorted_colores = list(raw_color_tag.items())
+    sorted_colores.sort(key=secondItem)
 
-def whites255(n):
-    return l_whites255[n % len(l_whites255)]
+    n = 0
+    for color, amount in sorted_colores:
+        if n <= qcnt <= (amount + n) * k:
+            picked_color = colors[color][cnt % len(colors[color])]
+            if format == 'PIL':
+                return (int(value * 255) for value in picked_color)
+            elif format == 'drawBot':
+                return picked_color
+        n += amount
 
-def reds(n):
-    return l_reds[n % len(l_reds)]
+    # if format == 'PIL':
+    #     return raw_color_tag.items()[0][1]
+    # else:
+    #     pass
 
-def reds255(n):
-    return l_reds255[n % len(l_reds255)]
-
-def yellows(n):
-    return l_yellows[n % len(l_yellows)]
-
-def yellows255(n):
-    return l_yellows255[n % len(l_yellows255)]
-
-def blues(n):
-    return l_blues[n % len(l_blues)]
-
-def blues255(n):
-    return l_blues255[n % len(l_blues255)]
-
-
-l_colors = [whites, yellows, reds, blues]
-l_colors255 = [whites255, yellows255, reds255, blues255]
-
-def colors(color, n):
-    return l_colors[color % len(l_colors)](n)
-
-def colors255(color, n):
-    return l_colors255[color % len(l_colors255)](n)
-
-def pickColor(raw_color_tag, cnt, format='PIL'):
-    if format == 'PIL':
-        pass
-    else:
-        pass
+if __name__ == "__main__":
+    print(pickColor({'reds':1, 'blues':.5}, 3))

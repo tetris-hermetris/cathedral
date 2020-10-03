@@ -14,7 +14,8 @@ def renderPILimage(poly_sequence, output_size, q=1.5, background=(0,0,0), img=No
 
     for cnt, poly in enumerate(poly_sequence):
         raw_poly = poly[0]
-        color = pickColor(poly[-1], cnt, format='PIL')
+        color = tuple(pickColor(poly[-1], cnt, format='PIL'))
+        print(color, raw_poly)
         draw.polygon(raw_poly, fill=color, outline=outline)
 
     img = ImageOps.flip(img)
