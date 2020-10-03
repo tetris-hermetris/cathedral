@@ -1,6 +1,7 @@
 ## TODO
 
 [ ] test in renderPILimage what if output= flag changes
+[ ] different output types
 
 
 ## Quick-start

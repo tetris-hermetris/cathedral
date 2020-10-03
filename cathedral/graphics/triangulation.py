@@ -1,4 +1,4 @@
-from cathedral.geometry import *
+from .geometry import *
 from statistics import mean
 
 def findTriangles(raw_poly, angle_of_triangulation=179):
@@ -34,10 +34,10 @@ def findTriangles(raw_poly, angle_of_triangulation=179):
     return triangles, tuple(points)
 
 
-def triangulate(poly_sequence, i = 9, angle_of_triangulation=179):
-    '''Build triangulation for polygon or polygons,
-    return them as a flat sequence'''
-
+def triangulate(poly, i = 9, angle_of_triangulation=179):
+    '''Build triangulation for polygon,
+    return them as a sequence of polygons'''
+    
     raw_poly, *tags = poly
     triangles, remain_poly = findTriangles(raw_poly, angle_of_triangulation)
 

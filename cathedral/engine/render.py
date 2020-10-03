@@ -1,13 +1,13 @@
-from PIL import Image, ImageDraw, 
+from PIL import Image, ImageDraw, ImageOps
 from cathedral.graphics.colors import pickColor
 
-def renderPILimage(poly_sequence, output_size, q=1.5, background=(0,0,0), img=None, outline==(0,0,0)):
+def renderPILimage(poly_sequence, output_size, q=1.5, background=(0,0,0), img=None, outline=(0,0,0)):
     '''Render sequence of polygons on PIL image object.
     
     If no given PIL image object, creates a new one'''
 
     if img == None:
-        w, h = output_size[0]*q, output_size[1]*q
+        w, h = int(output_size[0]*q), int(output_size[1]*q)
         img = Image.new('RGB', (w, h), background)
     draw = ImageDraw.Draw(img)
     img = ImageOps.flip(img)

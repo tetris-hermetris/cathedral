@@ -45,7 +45,7 @@ def rotate(point, pivot, angle, units='rad'):
     x -= xpv
     y -= ypv
 
-    return (x * c - y * s) + xpv, x * s + y * c) + ypv
+    return (x * c - y * s) + xpv, (x * s + y * c) + ypv
 
 
 def moveToPoint(p1, p2, distance, absolute=False):
