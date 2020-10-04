@@ -107,3 +107,4 @@ venv.bak/
 # Nox files
 .nox/*
 random_test_here.py
+dev/db_palettes.py

@@ -4,6 +4,7 @@ _l_whites = []
 _l_yellows = []
 _l_reds = []
 _l_blues = []
+_l_greens = []
 
 for i in range(500):
     w = 1 - random() / 15
@@ -13,13 +14,20 @@ for i in range(500):
     if i % 9 == 0:
         _l_blues.append((0.05 - random() / 30, .04 + random() / 5, .2 + random() / 4)) 
     else:
-        _l_blues.append((0.05 - random() / 30, .04 + random() / 30, .2 + random() / 5)) 
+        _l_blues.append((0.05 - random() / 30, .04 + random() / 30, .2 + random() / 5))
+    if i % 15 == 0:
+        _l_greens.append((0, 0.35 + random() / 4, 0.21+ random() / 5))
+    else:
+        _l_greens.append((0.05 - random() / 10, 0.17 + random() / 6, 0.05+ random() / 7))
+    
 
 colors = {'reds':    tuple(_l_whites),
           'whites': tuple(_l_whites),
           'yellows': tuple(_l_yellows),
           'reds':    tuple(_l_reds),
-          'blues':   tuple(_l_blues)}
+          'blues':   tuple(_l_blues),
+          'greens':   tuple(_l_greens)}
+
 
 def secondItem(l):
     return l[1]
