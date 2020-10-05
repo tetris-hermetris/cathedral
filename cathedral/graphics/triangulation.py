@@ -68,10 +68,10 @@ def shrink(poly, distance=4):
             points.append(moveToPoint(p1, middle(p0, p2), distance, absolute=True))
         elif a > 180:
             points.append(moveToPoint(p1, middle(p0, p2), -distance, absolute=True))
-    return (tuple(points), *tags)
+    return [tuple(points), *tags]
 
 def shrinkSequence(poly_sequence, distance=4):
     '''Shrinks every point towards its angle bisection in sequence of poly.'''
     
     poly_sequence = normalize(poly_sequence)
-    return (shrink(poly) for poly in poly_sequence)
+    return [shrink(poly) for poly in poly_sequence]

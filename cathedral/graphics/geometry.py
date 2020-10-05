@@ -192,7 +192,7 @@ def cut(f1, f2):
     fn4[0] = (fn4[0][0], fn4[0][1]+.001)
 
     new_figure = tuple(fn1) + tuple(fn2) + tuple(fn3) + tuple(fn4)
-    return (new_figure, *tags)
+    return [new_figure, *tags]
 
 
 def samePointsCount(raw_poly1, raw_poly2):
