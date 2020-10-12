@@ -22,7 +22,7 @@ scenario = (
              (((0, 0), (0, 100)),    add,     ('sheep1', sheep, (300, (500,500), 'k1'))),
              )
 ```
-Here we have a knob, which is set in 0 for first 30 frames, then knob's value grows to 100 from frame 30 to frame 50, then fall backward to zero from 50 to 80. And we place in frame a sheep primitive with scale 300, pivot point (500, 500) and our knob as a phase.
+Here we have a knob, which is set to 0 for first 30 frames, then knob's value grows to 100 from frame 30 to frame 50, then fall backward to zero from 50 to 80. And we place in frame a sheep primitive with scale 300, pivot point (500, 500) and our knob as a phase.
 
 Now we can render scenario:
 ```python
