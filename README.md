@@ -4,7 +4,7 @@ Deeply work in progress.
 
 ## TODO
 
-- make **engine**
+- ~~make **engine**~~
 - output via drawbot
 - **render:** make outline width relative to q
 - **render:** separate given img and generated one
