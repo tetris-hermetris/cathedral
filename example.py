@@ -1,7 +1,12 @@
-from cathedral.graphics.shapes import star
-from cathedral.graphics.triangulation import triangulate, shrinkSequence
-from cathedral.engine.render import renderPILimage, output
+from cathedral.engine.core import *
 
 if __name__ == "__main__":
-    frames = [renderPILimage(shrinkSequence(triangulate(star(s=750, lenght=100 + abs(i)))), (1000, 1000), q=1.5) for i in range(-100, 100, 5)]
-    output(frames, 'output/', 'star.gif')
+
+    scenario = (
+             (((0, 0), (0, 30)),     knob,    ('k1', 0)),
+             (((0, 30), (0, 50)),    knob,    ('k1', 0, 100)),
+             (((0, 50), (0, 80)),    knob,    ('k1', 100, 0)),
+             (((0, 0), (0, 100)),    add,     ('sheep1', sheep, (300, (500,500), 'k1'))),
+             )
+
+    engine( scenario, 1, ('PIL', (1000, 1000), 1.5), ('cathedral/', 'test.gif'))

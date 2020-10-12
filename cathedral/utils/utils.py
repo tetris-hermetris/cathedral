@@ -5,3 +5,8 @@ def normalize(poly_sequence):
 	'''Returns flat sequence of polygons'''
 	
 	return poly_sequence
+
+
+def declare(name, value):
+	globals()[name] = value
+	print('from utils', globals())

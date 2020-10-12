@@ -34,7 +34,7 @@ def secondItem(l):
 
 def pickColor(raw_color_tag, cnt, format=255, quantify=50):
     '''Returns final color value for given raw color tag and current counter'''
-    
+
     for color in raw_color_tag:
         if raw_color_tag[color] <= 0:
             raw_color_tag[color] = 2.2250738585072014e-308
@@ -56,5 +56,5 @@ def pickColor(raw_color_tag, cnt, format=255, quantify=50):
         n += amount
 
 
-if __name__ == "__main__":
-    print(pickColor({'reds':1, 'blues':.5}, 3))
+# if __name__ == "__main__":
+#     print(pickColor({'reds':1, 'blues':.5}, 3))

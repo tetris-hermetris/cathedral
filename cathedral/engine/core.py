@@ -1,24 +1,124 @@
-## PSEUDOCODE
+from ..graphics.triangulation import triangulate, shrinkSequence
+from .render import renderPILimage, output
 
-# scenario = [
-#     {start: 0, end: 120, scenes: [dancing_lizard, singing_star]},
-#     {start: 120, end: 140, ctime: 120, scenes: [dancing_lizard, singing_star]},
-#     {start: 10, end: 50, scenes: [broken_window, drunk_panda]}
-# ]
+#####################################################
+## just for testing #################################
+## and for proof a concept ##########################
+## will remove this code later ######################
+                                                    #
+def star(lenght):                                   #
+    pass                                            #
+def sheep(phase):                                   #
+    pass                                            #
+lfo1 = 0                                            #
+k1 = 0                                              #
+                                                    #
+def move(point, angle, distance, units='rad'):      #
+    if units == 'deg':                              #
+        angle = radians(angle)                      #
+    newX = point[0] + cos(angle) * distance         #
+    newY = point[1] + sin(angle) * distance         #
+    return newX, newY                               #
+                                                    #
+def sheep(s=50, pivot=(500, 500), phase=0, color={'whites':1}):
+    '''A sheep primitive as (points, 'live', color)'''
+                                                    #
+    if isinstance(phase, str):                      #
+        phase = globals()[phase]                    #
+    phase = abs((phase % 100 - 50) * 2)             #
+    fr1 = ((0.7476459510357816, 0.048), (0.60075329566855, -0.624), (0.6346516007532956, -0.964), (0.5630885122410546, -1.052), (0.4576271186440678, -0.948), (0.4915254237288136, -0.596), (0.4274952919020716, -0.268), (0.3069679849340866, -0.264), (0.2391713747645951, -0.672), (0.1751412429378531, -0.98), (0.09227871939736347, -1.064), (0.02824858757062147, -0.94), (0.11487758945386065, -0.676), (0.0696798493408663, -0.28), (-0.2542372881355932, -0.344), (-0.4274952919020716, -0.62), (-0.3973634651600753, -0.948), (-0.4312617702448211, -1.056), (-0.5291902071563088, -0.996), (-0.5480225988700564, -0.584), (-0.4764595103578154, -0.3), (-0.5254237288135594, -0.264), (-0.608286252354049, -0.552), (-0.6045197740112994, -1.016), (-0.6572504708097928, -1.104), (-0.7401129943502824, -1.016), (-0.7401129943502824, -0.516), (-0.9058380414312618, -0.12), (-0.8757062146892656, 0.212), (-1.0, 0.212), (-0.6308851224105462, 0.516), (-0.20903954802259886, 0.412), (0.20527306967984935, 0.436), (0.2693032015065913, 0.8), (0.2580037664783427, 0.836), (0.2919020715630885, 0.844), (0.3182674199623352, 0.808), (0.3709981167608286, 0.828), (0.352165725047081, 0.872), (0.2580037664783427, 0.86), (0.10734463276836158, 0.888), (0.04331450094161959, 1.068), (0.1751412429378531, 1.068), (0.3069679849340866, 0.924), (0.3860640301318267, 1.0), (0.5819209039548022, 0.996), (0.6610169491525424, 0.932), (0.7928436911487758, 1.052), (0.9133709981167608, 1.032), (0.8267419962335216, 0.86), (0.7137476459510358, 0.84), (0.615819209039548, 0.852), (0.6120527306967984, 0.808), (0.6308851224105462, 0.78), (0.7024482109227872, 0.828), (0.6572504708097928, 0.72), (0.5404896421845574, 0.6), (0.4124293785310734, 0.6), (0.4651600753295669, 0.536), (0.4350282485875706, 0.5), (0.5103578154425612, 0.5), (0.480225988700565, 0.536), (0.5404896421845574, 0.6), (0.6572504708097928, 0.72), (0.672316384180791, 0.604), (0.687382297551789, 0.504), (0.6949152542372882, 0.46), (0.7062146892655368, 0.404))
+    fr2 = ((0.6836158192090396, 0.044), (0.6120527306967984, -0.64), (0.623352165725047, -0.956), (0.5630885122410546, -1.052), (0.4463276836158192, -1.004), (0.4990583804143126, -0.66), (0.4576271186440678, -0.3), (0.3069679849340866, -0.264), (0.2843691148775895, -0.644), (0.1374764595103578, -0.972), (0.0696798493408663, -1.036), (-0.0018832391713747645, -0.932), (0.1638418079096045, -0.592), (0.04331450094161959, -0.264), (-0.1751412429378531, -0.276), (-0.4086629001883239, -0.56), (-0.3709981167608286, -0.976), (-0.4538606403013183, -0.94), (-0.4764595103578154, -0.896), (-0.551789077212806, -0.552), (-0.487758945386064, -0.252), (-0.5480225988700564, -0.264), (-0.67984934086629, -0.544), (-0.6045197740112994, -0.996), (-0.664783427495292, -1.008), (-0.736346516007533, -0.928), (-0.8493408662900188, -0.512), (-0.9058380414312618, -0.12), (-0.8757062146892656, 0.212), (-1.0, 0.212), (-0.6308851224105462, 0.516), (-0.11487758945386065, 0.412), (0.15254237288135594, 0.436), (0.4387947269303202, 0.8), (0.4199623352165725, 0.868), (0.5743879472693032, 0.876), (0.6271186440677966, 0.816), (0.6760828625235404, 0.836), (0.6534839924670434, 0.88), (0.4199623352165725, 0.868), (0.2843691148775895, 0.888), (0.19397363465160075, 1.044), (0.3258003766478343, 1.068), (0.4689265536723164, 0.964), (0.5291902071563088, 1.04), (0.7250470809792844, 1.036), (0.7853107344632768, 0.992), (0.8041431261770244, 1.016), (0.9322033898305084, 1.052), (0.8945386064030132, 0.96), (0.8418079096045198, 0.9), (0.8267419962335216, 0.9), (0.8267419962335216, 0.892), (0.8305084745762712, 0.888), (0.8305084745762712, 0.888), (1.0, 0.708), (0.9887005649717514, 0.704), (0.9096045197740112, 0.7), (0.9510357815442562, 0.648), (0.9133709981167608, 0.612), (0.9736346516007532, 0.612), (0.9623352165725048, 0.648), (0.9887005649717514, 0.704), (1.0, 0.708), (0.9774011299435028, 0.6), (0.9058380414312618, 0.556), (0.7288135593220338, 0.58), (0.664783427495292, 0.4))
+    points = []                                     #
+    for i in range(len(fr1)):                       #
+        p = moveToPoint(fr1[i], fr2[i], phase)      #
+        points.append(((p[0] * s) + pivot[0], (p[1] * s) + pivot[1]))
+    poly = tuple(points)                            #
+    return [poly, 'live', color]                    #
+                                                    #
+def moveToPoint(p1, p2, distance, absolute=False):  #
+    if absolute:                                    #
+        return move(p1, angle(p1, p2), distance)    #
+    else:                                           #
+        distance /= 100                             #
+        x1, y1 = p1                                 #
+        x2, y2 = p2                                 #
+        return x1 + (x2 - x1) * distance, y1 + (y2 - y1) * distance
+                                                    #
+#####################################################
 
-# def dancing_lizard(time, context, ...):
-#     pass
 
-# def engine():
-#     context = {}
-#     frame = 0
-#     while frame < duration*fps:
-#         time = frame/fps
-#         for {start, end, scenes, ctime} in scenario:
-#             if start <= time <= end:
-#                 for scene in scenes:
-#                     figure = scene(ctime or time, context, ...)
-#                     add_figure_to_frame(content, figure)
-#         post_processing(time, content)
-#         render_frame(content)
-#         frame += 1
+
+'''
+# possible scenario notation
+scenario1 = (
+             (((0, 0), (0, 3)),     knob,   ('k1', 0)),
+             (((0, 3), (0, 5)),     knob,   ('k1', 0, 100)),
+             (((0, 5), (0, 8)),     knob,   ('k1', 100, 0)),
+             (((0, 5), (0, 8)),     lfo,    ('lfo1', 3)),
+             (((0, 0), (0, 10)),    add,    ('star1', star(lenght=lfo1))),
+             (((0, 0), (0, 10)),    add,    ('sheep1', sheep(phase=lfo1))),
+             (((0, 0), (0, 10)),    cut,    ('star1', 'sheep1')),
+             (((0, 0), (0, 10)),    post,   ('explode', 'sheep1', k1)),
+             )
+'''
+
+def min2sec(min_sec):
+    '''Take (minutes, seconds) tuple and return overall seconds'''
+
+    return min_sec[0] * 60 + min_sec[1]
+
+def inTime(cur_time, time_range):
+    '''Check if moment is inside a time range'''
+    
+    start = min2sec(time_range[0])
+    end = min2sec(time_range[1])
+    return start <= cur_time <= end
+
+
+def declare(name, value):
+    globals()[name] = value
+
+def knob(context, cur_time, duration, name, value1, value2=None):
+    if value2 == None:
+        declare(name, value1)
+    else:
+        start = min2sec(duration[0])
+        end = min2sec(duration[1])
+        value = value1 + ((cur_time - start) / (end - start)) * (value2 - value1)
+        declare(name, value)
+
+def add(context, cur_time, duration, name, value1, value2, is_visible=1):
+    context['shapes'][name] = [value1(*value2), is_visible]
+
+def longestTimeIn(scenario):
+    largest = 0
+    for line in scenario:
+        if largest < min2sec(line[0][1]):
+            largest = min2sec(line[0][1])
+    return largest
+
+
+def engine(scenario, fps, render_settings, output_settings):
+    context = {'fps': fps,
+               'shapes': {},
+               'buffer': {}}
+    duration_in_sec = longestTimeIn(scenario)
+    frames = []
+    frame_n = 0
+    while frame_n < duration_in_sec*fps:
+        figures = []
+        cur_time = frame_n/fps
+        for time_range, function, params in scenario:
+            if inTime(cur_time, time_range):
+                function(context, cur_time, time_range, *params)
+                # if post then turning off live and visibility
+        for name, shape in context['shapes'].items():
+            if shape[1] or shape[0][1] == 'live':
+                context['buffer'][name] = triangulate(shape[0])
+        renderer = render_settings[0]
+        if renderer == 'PIL':
+            for figure in context['buffer'].values():
+                figures += shrinkSequence(figure)
+            frames += [renderPILimage(figures, *render_settings[1:])]
+        frame_n += 1
+    output(frames, *output_settings)
